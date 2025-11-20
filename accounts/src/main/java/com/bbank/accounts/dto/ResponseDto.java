@@ -1,6 +1,7 @@
 package com.bbank.accounts.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -10,6 +11,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
+@Builder
 public class ResponseDto <T>{
     private String status;
     private T data;

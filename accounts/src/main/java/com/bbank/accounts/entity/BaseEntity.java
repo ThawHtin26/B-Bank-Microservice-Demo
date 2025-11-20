@@ -21,20 +21,17 @@ import java.time.LocalDateTime;
 public class BaseEntity {
 
     @CreationTimestamp
-    @Column(updatable = false,
-            name = "created_at")
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(updatable = false,
-            name = "created_by")
+    @Column(name = "created_by")
     private String createdBy;
 
-    @Column(insertable = false,
-            name = "updated_at")
+    @UpdateTimestamp
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @UpdateTimestamp
-    @Column(insertable = false,
-            name = "updated_by")
+    @Column(name = "updated_by")
     private String updatedBy;
+
 }
