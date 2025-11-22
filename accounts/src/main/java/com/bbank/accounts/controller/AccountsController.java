@@ -48,4 +48,29 @@ public class AccountsController {
                 .body(responseBody);
     }
 
+    @PostMapping("/update")
+    public ResponseEntity<ResponseDto<CustomerDto>> updateAccountDetail(@RequestBody CustomerDto customerDto) {
+
+        boolean isUpdated = accountService.updatedAccount(customerDto);
+        ResponseDto<CustomerDto> responseBody = null;
+        if(isUpdated){
+            responseBody = ResponseDto.<CustomerDto>builder()
+                    .status(AccountConstants.STATUS_200)
+                    .data(customerDto)
+                    .message(AccountConstants.MESSAGE_200)
+                    .build();
+        }else{
+            responseBody = ResponseDto.<CustomerDto>builder()
+                    .status(AccountConstants.STATUS_500)
+                    .data(customerDto)
+                    .message(AccountConstants.MESSAGE_500)
+                    .build();
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(responseBody);
+    }
+
+
 }

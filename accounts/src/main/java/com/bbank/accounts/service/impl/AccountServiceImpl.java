@@ -68,6 +68,31 @@ public class AccountServiceImpl implements AccountService {
         return customerDto;
     }
 
+    @Override
+    public boolean updatedAccount(CustomerDto customerDto) {
+        boolean isUpdated = false;
+        AccountDto accountDto = customerDto.getAccount();
+
+        if(accountDto != null) {
+
+            Account account = accountRepository.findById(accountDto.getAccountNumber()).orElseThrow(
+                    () -> new ResourceNotFoundException("Account not found with account number: " + accountDto.getAccountNumber()));
+
+            BeanUtils.copyProperties(accountDto, account);
+            account = accountRepository.save(account);
+
+            Long customerId = account.getCustomerId();
+            Customer customer = customerRepository.findById(customerId).orElseThrow(
+                    ()-> new ResourceNotFoundException("Customer not found with customer Id: " + customerId)
+            );
+
+            BeanUtils.copyProperties(customerDto, customer);
+            customerRepository.save(customer);
+            isUpdated = true;
+        }
+        return isUpdated;
+    }
+
 
     private Account createNewAccountFromCustomer(Customer customer) {
         Account account = new Account();
